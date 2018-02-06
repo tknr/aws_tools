@@ -1,0 +1,5 @@
+#!/bin/bash
+export AWS_ACCESS_KEY_ID='AKIAJ7B3P4YO6B7DJSRA'
+export AWS_SECRET_ACCESS_KEY='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'
+aws ec2 describe-instances --region 'ap-northeast-1' --output text --query 'Reservations[].Instances[].[PublicIpAddress,Tags[?Key==`Name`].Value|[0]]'
+
