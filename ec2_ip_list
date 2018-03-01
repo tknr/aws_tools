@@ -1,0 +1,19 @@
+#!/bin/bash
+IFS=$'\n'
+if [ $# -ne 1 ]; then
+	echo "usage: ${0##*/} <target>"
+	exit 1;
+fi
+
+PROPERTY_FILE=~/.aws/$1
+if [ ! -e $PROPERTY_FILE ]; then 
+	echo "not exist property file:$PROPERTY_FILE"
+fi
+
+. $PROPERTY_FILE
+
+export AWS_ACCOUNT_NUMBER=$AWS_ACCOUNT_NUMBER
+export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+aws ec2 describe-instances --region $AWS_REGION --output text --query 'Reservations[].Instances[].[PublicIpAddress,Tags[?Key==`Name`].Value|[0]]'
+

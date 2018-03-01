@@ -1,6 +1,0 @@
-#!/bin/bash
-export AWS_ACCOUNT_NUMBER=884474839495
-export AWS_ACCESS_KEY_ID='AKIAIRVU4WCWV5JJQICQ'
-export AWS_SECRET_ACCESS_KEY='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'
-aws ec2 describe-instances --region 'ap-northeast-1' --output text --query 'Reservations[].Instances[].[PublicIpAddress,Tags[?Key==`Name`].Value|[0]]'
-
