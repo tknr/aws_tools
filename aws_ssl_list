@@ -16,4 +16,4 @@ fi
 export AWS_ACCOUNT_NUMBER=$AWS_ACCOUNT_NUMBER
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-aws acm list-server-certificates
+aws acm --region $AWS_REGION list-certificates
