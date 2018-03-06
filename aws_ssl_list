@@ -8,6 +8,7 @@ fi
 PROPERTY_FILE=~/.aws/$1
 if [ ! -e $PROPERTY_FILE ]; then 
 	echo "not exist property file:$PROPERTY_FILE"
+	exit 1;
 fi
 
 . $PROPERTY_FILE
