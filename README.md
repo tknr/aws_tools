@@ -36,11 +36,21 @@ AWS_REGION=ap-northeast-1
 
 show setting files under ~/.aws/ .
 
+```bash:aws_list
+aws_list
+
+hoge
+huga
+fizz
+bazz
+```
+
+
 ### aws_ec2_ip_list <setting fielname>
 
 shows global ip and name of instnces.
 
-```example:
+```bash:aws_ec2_ip_list
 aws_ec2_ip_list hoge
 
 12.34.5.67      hoge_web_rel_1
