@@ -20,4 +20,5 @@ if [ $export_count -eq 0 ]; then
 	echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bash_profile
 fi
 echo "installed."
-source ~/.bash_profile
+echo "execute to complete installation:"
+echo "source ~/.bash_profile"
