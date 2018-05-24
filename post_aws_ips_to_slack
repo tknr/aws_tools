@@ -1,0 +1,23 @@
+#!/bin/bash
+IFS=$'\n'
+slack_webhook_url=`cat ~/.aws_batch/.slack_webhook_url`
+slack_channel='#of_aws_ip'
+slack_botname='aws_ip_bot'
+text=""
+for aws_team in `aws_list`
+do
+	text=$text${aws_team}":\n"
+	for line in `aws_ec2_ip_list ${aws_team}`
+	do
+		text=$text$line"\n"
+	done
+	text=$text"--------------\n"
+done
+echo $slack_webhook_url
+echo -e $text
+curl -s -S -X POST --data-urlencode "payload={ \
+    \"channel\": \"${slack_channel}\", \
+    \"username\": \"${slack_botname}\", \
+    \"text\": \"${text}\" \
+    }" ${slack_webhook_url} >/dev/null
+
