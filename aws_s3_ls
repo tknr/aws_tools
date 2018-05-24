@@ -1,7 +1,7 @@
 #!/bin/bash
 IFS=$'\n'
-if [ $# -ne 1 ]; then
-	echo "usage: ${0##*/} <target>"
+if [ $# -ne 2 ]; then
+	echo "usage: ${0##*/} <target> <bucket_name>"
 	exit 1;
 fi
 
@@ -16,5 +16,5 @@ fi
 export AWS_ACCOUNT_NUMBER=$AWS_ACCOUNT_NUMBER
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-aws acm --region $AWS_REGION list-certificates
-#aws iam --region $AWS_REGION list-server-certificates
+aws s3 --region $AWS_REGION ls s3://$2
+

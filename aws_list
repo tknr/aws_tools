@@ -1,5 +1,5 @@
 #!/bin/bash
 IFS=$'\n'
 
-ls -1 ~/.aws 
+ls -1 ~/.aws_batch/ 
 

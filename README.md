@@ -19,10 +19,10 @@ or
 
 ## config
 
-make setting files under ~/.aws/.
+make setting files under ~/.aws_batch/.
 
 ```example:
-cat ~/.aws/hoge
+cat ~/.aws_batch/hoge
 
 AWS_ACCOUNT_NUMBER=0123456789
 AWS_ACCESS_KEY_ID=ABCDEFGHIJKLMN
@@ -34,7 +34,7 @@ AWS_REGION=ap-northeast-1
 
 ### aws_list
 
-show setting files under ~/.aws/ .
+show setting files under ~/.aws_batch/ .
 
 ```bash:aws_list
 aws_list
