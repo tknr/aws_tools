@@ -19,7 +19,11 @@ do
 	text=$text"--------------\n"
 done
 echo $slack_webhook_url
+text="\`\`\`\n"$text"\n\`\`\`"
 echo -e $text
+
+#exit;
+
 curl -s -S -X POST --data-urlencode "payload={ \
     \"channel\": \"${slack_channel}\", \
     \"username\": \"${slack_botname}\", \
