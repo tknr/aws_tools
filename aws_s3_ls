@@ -1,7 +1,7 @@
 #!/bin/bash
 IFS=$'\n'
-if [ $# -ne 2 ]; then
-	echo "usage: ${0##*/} <target> <bucket_name>"
+if [ $# -ne 4 ]; then
+	echo "usage: ${0##*/} <target_project> <bucket> <folder> <max_file_size(KiB)>"
 	exit 1;
 fi
 
@@ -16,5 +16,19 @@ fi
 export AWS_ACCOUNT_NUMBER=$AWS_ACCOUNT_NUMBER
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-aws s3 --region $AWS_REGION ls s3://$2
 
+BUCKET=$2
+FOLDER=$3
+MAX_FS=$4
+
+aws s3 ls s3://${BUCKET}/${FOLDER}/ --recursive --human > /tmp/s3_${BUCKET}_list_human.log
+
+rm -f /tmp/s3_${BUCKET}_over_${MAX_FS}_list.log
+
+for line in `cat /tmp/s3_${BUCKET}_list_human.log | grep "KiB" | tr -s " " | sort -n`
+do
+	kbs=`echo ${line}| cut -d " " -f 3 | cut -d "." -f 1`
+	if [ $kbs -ge $MAX_FS ]; then
+		echo $line >> /tmp/s3_${BUCKET}_over_${MAX_FS}_list.log
+	fi
+done
