@@ -1,8 +1,8 @@
 #!/bin/bash
 ## https://qiita.com/komazawa/items/b0ece33bf6d762d34d99
 #IFS=$'\n'
-if [ $# -ne 2 ]; then
-	echo "usage: ${0##*/} <target_project> <DistributionID>"
+if [ $# -ne 1 ]; then
+	echo "usage: ${0##*/} <target_project>"
 	exit 1;
 fi
 
@@ -17,8 +17,7 @@ fi
 export AWS_ACCOUNT_NUMBER=$AWS_ACCOUNT_NUMBER
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-
-DISTRIBUTION_ID=$2
+export DISTRIBUTION_ID=$DISTRIBUTION_ID
 
 START_DATETIME=`date "+%Y-%m-01 00:00:00"`
 END_DATETIME=`date "+%Y-%m-%d %H:%M:%S"`

@@ -9,7 +9,7 @@ fi
 . $PROPERTY_FILE
 
 text=""
-for aws_team in `aws_list`
+for aws_team in `aws_list | grep -v tonoel`
 do
 	text=$text${aws_team}":\n"
 	for line in `aws_ec2_ip_list ${aws_team}`
