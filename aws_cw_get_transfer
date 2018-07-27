@@ -1,8 +1,8 @@
 #!/bin/bash -x
 ## https://qiita.com/komazawa/items/b0ece33bf6d762d34d99
 #IFS=$'\n'
-if [ $# -ne 5 ]; then
-	echo "usage: ${0##*/} <target_project> <DistributionID> <start-datetime> <end-datetime> <period>"
+if [ $# -ne 2 ]; then
+	echo "usage: ${0##*/} <target_project> <DistributionID>"
 	exit 1;
 fi
 
@@ -19,16 +19,33 @@ export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 
 DISTRIBUTION_ID=$2
-START_DATETIME=$3
-END_DATETIME=$4
-PERIOD=$5
 
-aws cloudwatch get-metric-statistics \
+START_DATETIME=`date "+%Y-%m-01 00:00:00"`
+END_DATETIME=`date "+%Y-%m-%d %H:%M:%S"`
+
+START_UD=`date -j -f "%Y-%m-%d %H:%M:%S" "${START_DATETIME}" "+%s"`
+END_UD=`date -j -f "%Y-%m-%d %H:%M:%S" "${END_DATETIME}" "+%s"`
+#PERIOD=`expr ${END_UD} - ${START_UD}`
+PERIOD=2592000
+
+START_UT=`date -r ${START_UD} +"%Y-%m-%dT%H:%M:%S+09:00"`
+END_UT=`date -r ${END_UD} +"%Y-%m-%dT%H:%M:%S+09:00"`
+
+
+RESULT=`aws cloudwatch get-metric-statistics \
 --namespace "AWS/CloudFront" \
 --dimensions Name=DistributionId,Value=${DISTRIBUTION_ID} Name=Region,Value=Global \
 --metric-name "BytesDownloaded" \
 --statistics Sum \
---start-time "${START_DATETIME}" \
---end-time "${END_DATETIME}" \
+--start-time "${START_UT}" \
+--end-time "${END_UT}" \
 --period ${PERIOD} \
 --region us-east-1
+`
+
+SUM_RAW=`echo ${RESULT} | jq -r '.Datapoints[].Sum'`
+SUM_GB=`echo "scale=4; $SUM_RAW / 1000 / 1000 / 1000 " | bc`
+
+echo $1":"
+echo "from: ${START_DATETIME} to:${END_DATETIME}"
+echo $SUM_GB" GB"
