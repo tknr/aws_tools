@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 ## https://qiita.com/komazawa/items/b0ece33bf6d762d34d99
 #IFS=$'\n'
 if [ $# -ne 2 ]; then
