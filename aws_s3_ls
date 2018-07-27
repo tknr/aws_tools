@@ -32,3 +32,5 @@ do
 		echo $line >> /tmp/s3_${BUCKET}_over_${MAX_FS}_list.log
 	fi
 done
+
+cat /tmp/s3_${BUCKET}_over_${MAX_FS}_list.log | sort -r > /tmp/s3_${BUCKET}_over_${MAX_FS}_list_sort_date.log

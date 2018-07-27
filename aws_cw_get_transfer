@@ -1,0 +1,34 @@
+#!/bin/bash -x
+## https://qiita.com/komazawa/items/b0ece33bf6d762d34d99
+#IFS=$'\n'
+if [ $# -ne 5 ]; then
+	echo "usage: ${0##*/} <target_project> <DistributionID> <start-datetime> <end-datetime> <period>"
+	exit 1;
+fi
+
+PROPERTY_FILE=~/.aws_batch/$1
+if [ ! -e $PROPERTY_FILE ]; then 
+	echo "not exist property file:$PROPERTY_FILE"
+	exit 1;
+fi
+
+. $PROPERTY_FILE
+
+export AWS_ACCOUNT_NUMBER=$AWS_ACCOUNT_NUMBER
+export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+
+DISTRIBUTION_ID=$2
+START_DATETIME=$3
+END_DATETIME=$4
+PERIOD=$5
+
+aws cloudwatch get-metric-statistics \
+--namespace "AWS/CloudFront" \
+--dimensions Name=DistributionId,Value=${DISTRIBUTION_ID} Name=Region,Value=Global \
+--metric-name "BytesDownloaded" \
+--statistics Sum \
+--start-time "${START_DATETIME}" \
+--end-time "${END_DATETIME}" \
+--period ${PERIOD} \
+--region us-east-1
