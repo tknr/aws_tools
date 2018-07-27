@@ -44,7 +44,7 @@ RESULT=`aws cloudwatch get-metric-statistics \
 `
 
 SUM_RAW=`echo ${RESULT} | jq -r '.Datapoints[].Sum'`
-SUM_GB=`echo "scale=4; $SUM_RAW / 1000 / 1000 / 1000 " | bc`
+SUM_GB=`echo "scale=4; $SUM_RAW / 1024 / 1024 / 1024 " | bc`
 
 echo $1":"
 echo "from: ${START_DATETIME} to:${END_DATETIME}"
