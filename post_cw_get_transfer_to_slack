@@ -13,6 +13,7 @@ aws_team_list=(
 "tfhd"
 "firstship"
 "tonoel"
+"dear"
 )
 for aws_team in ${aws_team_list[@]}
 do
