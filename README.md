@@ -28,6 +28,7 @@ AWS_ACCOUNT_NUMBER=0123456789
 AWS_ACCESS_KEY_ID=ABCDEFGHIJKLMN
 AWS_SECRET_ACCESS_KEY=AB12CD34EF56GH78IJ90
 AWS_REGION=ap-northeast-1
+DISTRIBUTION_ID=[value from CloudFront]
 
 cat ~/.aws_batch/.slack 
 slack_webhook_url='https://hooks.slack.com/services/xxxxxxxx/yyyyy/zzzzzzzz'
