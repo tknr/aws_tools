@@ -16,8 +16,9 @@ aws_team_list=(
 "keiretsu"
 "kokochie"
 "oliviers"
-"oliviers_new"
+#"oliviers_new"
 "tfhd"
+"hakuba"
 )
 for aws_team in ${aws_team_list[@]}
 do
